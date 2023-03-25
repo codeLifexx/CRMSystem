@@ -1,0 +1,247 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="css/public.css">
+    <script src="js/jquery.js"></script>
+    <link rel="stylesheet" href="./css/班级管理.css">
+</head>
+
+<body>
+    <div class="top">
+        <!--顶部-->
+        <div class="logo">
+            <a href="#">
+                <img src="images/mihayou.png" alt="">
+            </a>
+        </div>
+        <div class="menu">
+            <img src="icon/menu.svg" alt="">
+        </div>
+        <div class="user">
+            <div id="theam">切换主题</div>
+            <div class="avatar">
+                <div class="ico">
+                    <img src="images/派蒙.jfif" alt="">
+                </div>
+                <span id="uname"></span>
+            </div>
+            <div class="notice">
+                <img src="images/notice.png" alt="">
+                <span>通知公告</span>
+            </div>
+            <div class="quit">
+                <img src="images/quit.png" alt="">
+                <span id='exit'>注销退出</span>
+            </div>
+        </div>
+    </div>
+    <div class="main">
+        <div class="nav">
+            <!--        侧边导航栏-->
+            <div class="jxdgl">教学点管理</div>
+            <ul class="nav-list">
+                <li>
+                    <a class="this" href="./班级管理.html">
+                        <i class="ico"></i>
+                        <span>班级管理</span>
+                        <i class="ico-yjt">
+                            <img src="icon/yjt.png" alt="">
+                        </i>
+                    </a>
+                </li>
+                <li>
+                    <a href="./学生管理.html">
+                        <i class="ico"></i>
+                        <span>学生管理</span>
+                        <i class="ico-yjt">
+                            <img src="icon/yjt.png" alt="">
+                        </i>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="./添加班级.html">
+                        <i class="ico"></i>
+                        <span>添加班级</span>
+                        <i class="ico-yjt">
+                            <img src="icon/yjt.png" alt="">
+                        </i>
+                    </a>
+                </li>
+                <li>
+                    <a href="./修改班级.html">
+                        <i class="ico"></i>
+                        <span>修改班级</span>
+                        <i class="ico-yjt">
+                            <img src="icon/yjt.png" alt="">
+                        </i>
+                    </a>
+                </li>
+                <li>
+                    <a href="./添加学生.html">
+                        <i class="ico"></i>
+                        <span>添加学生</span>
+                        <i class="ico-yjt">
+                            <img src="icon/yjt.png" alt="">
+                        </i>
+                    </a>
+                </li>
+                <li>
+                    <a href="./修改学生.html">
+                        <i class="ico"></i>
+                        <span>修改学生</span>
+                        <i class="ico-yjt">
+                            <img src="icon/yjt.png" alt="">
+                        </i>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="ico"></i>
+                        <span>成绩管理</span>
+                        <i class="ico-yjt">
+                            <img src="icon/yjt.png" alt="">
+                        </i>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="ico"></i>
+                        <span>修改成绩</span>
+                        <i class="ico-yjt">
+                            <img src="icon/yjt.png" alt="">
+                        </i>
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="contaner">
+            <div class="pd30">
+                <div class="title">
+                    <div class="icon">
+                    </div>
+                    <p>
+                        前端实训课程——班级列表&emsp;【码路教育】
+                    </p>
+                </div>
+                <div class="table">
+                    <table id="table" cell-spacing="0">
+                        <tr>
+                            <th>开课时间</th>
+                            <th>课程名称</th>
+                            <th>课程操作</th>
+                        </tr>
+                        <tbody>
+
+                        </tbody>
+
+                    </table>
+                    <ul>
+                        <li>共2条记录</li>
+                        <li>首页</li>
+                        <li>上一页</li>
+                        <li>1</li>
+                        <li>下一页</li>
+                        <li>尾页</li>
+                        <li>共3页</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script src="js/public.js"></script>
+<script src="./js/reLogin.js"></script>
+<script src="./js/alert.js"></script>
+<script>
+
+    const tbody = document.querySelector('tbody')
+
+
+
+    
+    gotoLogin()
+    isTheam()
+
+
+
+
+    let maluClass = []
+
+    if (sessionStorage.getItem('maluClass')) {
+        maluClass = JSON.parse(sessionStorage.getItem('maluClass'))
+
+    } else {
+        maluClass = [
+            { startTime: '2022-07', status: '报名中' },
+            { startTime: '2022-08', status: '实训中' },
+            { startTime: '2022-09', status: '已结业' },
+            { startTime: '2022-10', status: '报名中' },
+        ]
+    }
+
+
+    function render() {
+        for (let i = 0; i < maluClass.length; i++) {
+            tbody.insertAdjacentHTML('beforeend', `<tr>
+                                <td>${maluClass[i].startTime}</td>
+                                <td>${maluClass[i].status}</td>
+                                <td class="option">
+                                    <div class="delClass" id='${i}'>删除</div>
+                                    <div class="changeClass" id="${i}">编辑</div>
+                                </td>
+                            </tr>`)
+        }
+    }
+    function updateStorage() {
+        sessionStorage.setItem('maluClass', JSON.stringify(maluClass))
+    }
+
+    updateStorage()
+
+    function isUpdate() {
+        if (sessionStorage.getItem('newClass')) {
+            let newClass = JSON.parse(sessionStorage.getItem('newClass'))
+            maluClass.push(newClass)
+            updateStorage()
+            sessionStorage.removeItem('newClass')
+        }
+        render()
+    }
+    isUpdate()
+
+
+    document.addEventListener('click', (event) => {
+        // 删除
+        const delClass = document.querySelectorAll('.delClass')
+        if ([...delClass].includes(event.target)) {
+            let flag = confirm(`确认要删除【${maluClass[event.target.id].startTime}班】吗？`)
+            if (flag) {
+                maluClass.splice(event.target.id, 1)
+                updateStorage()
+                location.href = '班级管理.html'
+            }
+        }
+
+        // 修改
+        const changeClass = document.querySelectorAll('.changeClass')
+        if ([...changeClass].includes(event.target)) {
+            sessionStorage.setItem('classId', event.target.id)
+            location.href = '修改班级.html'
+        }
+
+    })
+
+
+
+
+</script>
+
+</html>
